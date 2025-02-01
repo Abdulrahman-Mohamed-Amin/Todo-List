@@ -1,0 +1,38 @@
+<div class="main">
+    <div class="box shadow-sm rounded-3 p-3 bg-white">
+        <form (submit)="add()">
+            <input type="text" placeholder="Add a new Task" [(ngModel)]="newTodo.title" name="title">
+            @if(empty){
+                <div class="text-danger fw-bold text-center mt-2">Todo Can't Be Empty</div>
+            }
+        </form>
+        <div class="filter d-flex justify-content-between align-items-center pb-3 mb-3 mt-3">
+            <ul class="nav nav-underline">
+                <li class="nav-item">
+                  <a class="nav-link" (click)="all()">All</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" (click)="pending()">Pending</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" (click)="complete()">Completed</a>
+                </li>
+              </ul>
+            <button class="clear" (click)="clear()">Clear all</button>
+        </div>
+        <div class="todos">
+            @for(todo of todosOrg ; track todo.id ; let idx = $index){
+                <div class="todo d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex align-items-center gap-3">
+                        <input type="checkbox" class="check_box m-0" [(ngModel)]="todo.complete" (click)="update(todo)">
+                        <p [ngClass]="{'text-decoration-line-through': todo.complete}" class="m-0">{{todo.title}}</p>
+                    </div>
+                    <i class="fas fa-trash-alt delete" (click)="delete(todo.id)"></i>
+                </div>
+            }
+            @if(check){
+                <div class=" fw-bold text-center mt-2">No Todos To Show</div>
+            }
+        </div>
+    </div>
+</div>
